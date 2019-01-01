@@ -2,13 +2,16 @@ package com.timecoder.service;
 
 import com.timecoder.model.Episode;
 import com.timecoder.model.Theme;
-import com.timecoder.repository.EpisodeRepository;
 import com.timecoder.repository.ThemeRepository;
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import static java.util.Collections.singletonMap;
@@ -22,17 +25,26 @@ public class ThemeService {
     private final EpisodeService episodeService;
 
     public ResponseEntity<Map<String, Long>> createTheme(Theme theme) {
-        episodeService.getEpisodeById(theme.getEpisodeId());
+        Episode episode = episodeService.getEpisodeById(theme.getEpisodeId());
 
-        theme.setCreatedAt(Instant.now());
+        if (episode == null) {
+            throw new RuntimeException("Wrong episode for theme " + theme.getTitle());
+        }
+
         long id = themeRepository.save(theme).getId();
         return new ResponseEntity<>(singletonMap("id", id), OK);
     }
 
-    public ResponseEntity<Theme> updateTimeStamp(Long themeId) {
-        Theme theme = themeRepository.findById(themeId).get();
-        theme.setTimestamp(Instant.now());
-        themeRepository.save(theme);
-        return new ResponseEntity<>(theme, OK);
+    public Theme updateTimeStamp(Long episodeId, Long themeId) {
+        Theme introTheme = themeRepository.findFirstByEpisodeIdOrderByIdAsc(episodeId);
+        Theme currentTheme = themeRepository.findByIdAndEpisodeId(themeId, episodeId);
+
+        Duration duration = Duration.between(introTheme.getTimestamp(), Instant.now());
+        String timeCode = DurationFormatUtils.formatDuration(duration.toMillis(), "H:mm:ss", true);
+
+        currentTheme.setTimecode(timeCode);
+        currentTheme.setTimestamp(Instant.now());
+        themeRepository.save(currentTheme);
+        return currentTheme;
     }
 }

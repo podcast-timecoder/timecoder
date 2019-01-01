@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Episode {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     @Size(min = 1)
