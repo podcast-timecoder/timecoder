@@ -1,5 +1,6 @@
 package com.timecoder.web;
 
+import com.timecoder.model.Episode;
 import com.timecoder.model.Theme;
 import com.timecoder.service.ThemeService;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,4 @@ public class ThemeController {
     public Theme setThemeTimestamp(@PathVariable("id") Long id, @PathVariable("themeId") Long themeId){
        return themeService.updateTimeStamp(id, themeId);
     }
-
 }

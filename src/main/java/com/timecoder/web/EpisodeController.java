@@ -28,4 +28,9 @@ public class EpisodeController {
     public Episode getEpisodeById(@PathVariable("id") Long id){
         return episodeService.getEpisodeById(id);
     }
+
+    @RequestMapping(value = "/episodes/{id}/start", method = RequestMethod.POST)
+    public ResponseEntity startEpisode(@PathVariable("id") Long id){
+        return episodeService.startEpisode(id);
+    }
 }

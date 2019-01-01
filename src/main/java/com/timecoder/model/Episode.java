@@ -22,6 +22,8 @@ public class Episode {
     @Column(unique = true)
     String name;
 
+    boolean isStarted;
+
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JoinColumn(name = "episodeId")
     @OrderBy("createdAt")

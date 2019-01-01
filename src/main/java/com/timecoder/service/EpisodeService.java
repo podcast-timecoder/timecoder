@@ -34,4 +34,11 @@ public class EpisodeService {
     public Episode getEpisodeById(Long id) {
         return episodeRepository.findById(id).orElseThrow(() -> new RuntimeException("Episode id " + id + " not found"));
     }
+
+    public ResponseEntity startEpisode(Long id) {
+        Episode episode = getEpisodeById(id);
+        episode.setStarted(true);
+        episodeRepository.save(episode);
+        return new ResponseEntity<>(singletonMap("changed", true), OK);
+    }
 }
