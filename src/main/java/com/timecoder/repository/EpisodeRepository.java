@@ -3,4 +3,8 @@ package com.timecoder.repository;
 import com.timecoder.model.Episode;
 import org.springframework.data.repository.CrudRepository;
 
-public interface EpisodeRepository extends CrudRepository<Episode, Long> { }
+import java.util.List;
+
+public interface EpisodeRepository extends CrudRepository<Episode, Long> {
+    List<Episode> findAllByOrderByIdDesc();
+}

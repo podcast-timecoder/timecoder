@@ -24,6 +24,10 @@ public class EpisodeService {
     }
 
     public Iterable<Episode> getAllEpisodes() {
-        return episodeRepository.findAll();
+        return episodeRepository.findAllByOrderByIdDesc();
+    }
+
+    public Episode getEpisodeById(Long id) {
+        return episodeRepository.findById(id).orElseThrow(() -> new RuntimeException("Episode id " + id + " not found"));
     }
 }

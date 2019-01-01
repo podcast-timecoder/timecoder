@@ -1,7 +1,5 @@
 package com.timecoder.model;
 
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ExampleProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,9 +15,15 @@ import java.util.List;
 @NoArgsConstructor
 public class Episode {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    long id;
+
     @Size(min = 1)
+    @Column(unique = true)
     String name;
+
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @JoinColumn(name = "episodeName")
+    @JoinColumn(name = "episodeId")
+    @OrderBy("createdAt")
     List<Theme> themeList = new ArrayList<>();
 }

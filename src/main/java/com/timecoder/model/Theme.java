@@ -20,7 +20,8 @@ public class Theme {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @ApiModelProperty(hidden = true)
     long id;
-    long episodeName;
+    long episodeId;
     String title;
     Instant timestamp;
+    Instant createdAt;
 }

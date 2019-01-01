@@ -4,10 +4,7 @@ import com.timecoder.model.Episode;
 import com.timecoder.service.EpisodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -17,7 +14,7 @@ public class EpisodeController {
 
     private final EpisodeService episodeService;
 
-    @RequestMapping(value = "/episode", method = RequestMethod.POST)
+    @RequestMapping(value = "/episodes", method = RequestMethod.POST)
     public ResponseEntity createEpisode(@Valid @RequestBody Episode episode) {
         return episodeService.createEpisode(episode);
     }
@@ -27,5 +24,8 @@ public class EpisodeController {
         return episodeService.getAllEpisodes();
     }
 
-
+    @RequestMapping(value = "/episodes/{id}", method = RequestMethod.GET)
+    public Episode getEpisodeById(@PathVariable("id") Long id){
+        return episodeService.getEpisodeById(id);
+    }
 }

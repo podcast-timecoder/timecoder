@@ -19,7 +19,7 @@ public class ThemeController {
         return themeService.createTheme(theme);
     }
 
-    @RequestMapping(value = "/theme/{themeId}/timestamp", method = RequestMethod.PUT)
+    @RequestMapping(value = "/theme/{themeId}/timestamp", method = RequestMethod.POST)
     public ResponseEntity<Theme> setThemeTimestamp(@PathVariable("themeId") Long themeId){
        return themeService.updateTimeStamp(themeId);
     }
