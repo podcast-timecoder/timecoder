@@ -1,5 +1,6 @@
 package com.timecoder.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,9 +21,11 @@ public class Episode {
 
     @Size(min = 1)
     @Column(unique = true)
+    @ApiModelProperty(example = "#1")
     String name;
 
-    boolean isStarted;
+    @ApiModelProperty(example = "false")
+    boolean isStarted = false;
 
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JoinColumn(name = "episodeId")

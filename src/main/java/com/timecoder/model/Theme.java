@@ -22,8 +22,12 @@ public class Theme {
     @ApiModelProperty(hidden = true)
     Long id;
     Long episodeId;
+    @ApiModelProperty(example = "Интро")
     String title;
+    @ApiModelProperty(example = "-")
     String timecode;
+    @ApiModelProperty(hidden = true)
     Instant timestamp = Instant.now();
+    @ApiModelProperty(hidden = true)
     Date createdAt = new Date();
 }
