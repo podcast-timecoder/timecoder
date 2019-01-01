@@ -24,7 +24,6 @@ public class Theme {
     Long episodeId;
     String title;
     String timecode;
-    Instant timestamp;
-    @Temporal(TemporalType.TIMESTAMP)
-    Date createdAt;
+    Instant timestamp = Instant.now();
+    Date createdAt = new Date();
 }
