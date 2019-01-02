@@ -1,16 +1,13 @@
 package com.timecoder.service;
 
 import com.timecoder.model.Episode;
-import com.timecoder.model.Theme;
 import com.timecoder.repository.EpisodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-
 import java.time.Instant;
-import java.util.List;
 
 import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.OK;
@@ -38,6 +35,7 @@ public class EpisodeService {
     public ResponseEntity startEpisode(Long id) {
         Episode episode = getEpisodeById(id);
         episode.setStarted(true);
+        episode.setStartTime(Instant.now());
         episodeRepository.save(episode);
         return new ResponseEntity<>(singletonMap("changed", true), OK);
     }

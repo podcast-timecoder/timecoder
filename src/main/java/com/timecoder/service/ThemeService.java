@@ -36,14 +36,16 @@ public class ThemeService {
     }
 
     public Theme updateTimeStamp(Long episodeId, Long themeId) {
-        Theme introTheme = themeRepository.findFirstByEpisodeIdOrderByIdAsc(episodeId);
+        Instant startTime = episodeService.getEpisodeById(episodeId).getStartTime();
         Theme currentTheme = themeRepository.findByIdAndEpisodeId(themeId, episodeId);
 
-        Duration duration = Duration.between(introTheme.getTimestamp(), Instant.now());
+        Instant currentThemeTime = Instant.now();
+
+        Duration duration = Duration.between(startTime, currentThemeTime);
         String timeCode = DurationFormatUtils.formatDuration(duration.toMillis(), "H:mm:ss", true);
 
         currentTheme.setTimecode(timeCode);
-        currentTheme.setTimestamp(Instant.now());
+        currentTheme.setTimestamp(currentThemeTime);
         themeRepository.save(currentTheme);
         return currentTheme;
     }

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class Episode {
 
     @ApiModelProperty(example = "false")
     boolean isStarted = false;
+
+    Instant startTime;
 
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JoinColumn(name = "episodeId")
