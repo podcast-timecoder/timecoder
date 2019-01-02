@@ -46,6 +46,8 @@ public class ThemeService {
 
         currentTheme.setTimecode(timeCode);
         currentTheme.setTimestamp(currentThemeTime);
+        currentTheme.setPassed(true);
+
         themeRepository.save(currentTheme);
         return currentTheme;
     }

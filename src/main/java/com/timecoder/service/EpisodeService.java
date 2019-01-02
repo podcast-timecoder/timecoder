@@ -39,4 +39,11 @@ public class EpisodeService {
         episodeRepository.save(episode);
         return new ResponseEntity<>(singletonMap("changed", true), OK);
     }
+
+    public ResponseEntity stopEpisode(Long id) {
+        Episode episode = getEpisodeById(id);
+        episode.setStarted(false);
+        episodeRepository.save(episode);
+        return new ResponseEntity<>(singletonMap("changed", true), OK);
+    }
 }

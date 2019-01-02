@@ -33,4 +33,9 @@ public class EpisodeController {
     public ResponseEntity startEpisode(@PathVariable("id") Long id){
         return episodeService.startEpisode(id);
     }
+
+    @RequestMapping(value = "/episodes/{id}/stop", method = RequestMethod.POST)
+    public ResponseEntity stopEpisode(@PathVariable("id") Long id){
+        return episodeService.stopEpisode(id);
+    }
 }

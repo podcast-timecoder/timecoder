@@ -26,6 +26,8 @@ public class Theme {
     String title;
     @ApiModelProperty(example = "-")
     String timecode;
+    @ApiModelProperty(example = "false")
+    boolean passed = false;
     @ApiModelProperty(hidden = true)
     Instant timestamp = Instant.now();
     @ApiModelProperty(hidden = true)
