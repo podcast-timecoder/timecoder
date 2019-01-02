@@ -13,8 +13,8 @@ services:
     - MYSQL_DATABASE=timecoder
     volumes:
     - "./mycustom.cnf:/etc/mysql/conf.d/custom.cnf"
-  spring-boot-jpa-docker-webapp:
-    image: timecoder:0.1.0
+  timecoder-api:
+    image: spirogov/timecoder:0.1.0
     container_name: timecoder
     depends_on:
     - mysql
@@ -31,3 +31,10 @@ services:
     - SPRING_PROFILES_ACTIVE=prod
     links:
     - mysql
+  ui:
+    image: spirogov/timecoder-ui:0.1.0
+    container_name: timecoder-ui
+    ports:
+    - 80:80
+    links:
+    - timecoder-api
