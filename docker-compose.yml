@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.6
+    container_name: mysql
+    ports:
+    - 3306:3306
+    expose:
+    - 3306
+    environment:
+    - MYSQL_ROOT_PASSWORD=admin
+    - MYSQL_DATABASE=timecoder
+    volumes:
+    - "./mycustom.cnf:/etc/mysql/conf.d/custom.cnf"
+  spring-boot-jpa-docker-webapp:
+    image: timecoder:0.1.0
+    container_name: timecoder
+    depends_on:
+    - mysql
+    ports:
+    - 8080:8080
+    expose:
+    - 8080
+    environment:
+    - DATABASE_HOST=mysql
+    - DATABASE_NAME=timecoder
+    - DATABASE_USER=root
+    - MYSQL_ROOT_PASSWORD=admin
+    - DATABASE_PORT=3306
+    - SPRING_PROFILES_ACTIVE=prod
+    links:
+    - mysql
