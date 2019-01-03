@@ -19,9 +19,7 @@ services:
     depends_on:
     - mysql
     ports:
-    - 8080:8080
-    expose:
-    - 8080
+    - 8086:8080
     environment:
     - DATABASE_HOST=mysql
     - DATABASE_NAME=timecoder
@@ -32,9 +30,9 @@ services:
     links:
     - mysql
   ui:
-    image: spirogov/timecoder-ui:0.1.0
+    image: spirogov/timecoder-ui:0.1.7
     container_name: timecoder-ui
     ports:
-    - 80:80
+    - 8088:4200
     links:
     - timecoder-api
