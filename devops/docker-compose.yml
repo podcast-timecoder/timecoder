@@ -30,9 +30,7 @@ services:
     links:
     - mysql
   ui:
-    image: spirogov/timecoder-ui:0.1.10
+    image: spirogov/timecoder-ui:0.1.19
     container_name: timecoder-ui
     ports:
-    - 8089:4200
-    links:
-    - timecoder-api
+    - 80:80
