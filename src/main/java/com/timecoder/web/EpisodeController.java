@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static java.util.Collections.singletonMap;
+import static org.springframework.http.HttpStatus.OK;
+
 @RestController
 @RequiredArgsConstructor
 public class EpisodeController {
@@ -17,7 +20,8 @@ public class EpisodeController {
 
     @RequestMapping(value = "/episodes", method = RequestMethod.POST)
     public ResponseEntity createEpisode(@Valid @RequestBody Episode episode) {
-        return episodeService.createEpisode(episode);
+        long episodeId = episodeService.createEpisode(episode);
+        return new ResponseEntity<>(singletonMap("created", episodeId), OK);
     }
 
     @RequestMapping(value = "/episodes", method = RequestMethod.GET)
@@ -26,17 +30,17 @@ public class EpisodeController {
     }
 
     @RequestMapping(value = "/episodes/{id}", method = RequestMethod.GET)
-    public Episode getEpisodeById(@PathVariable("id") Long id){
+    public Episode getEpisodeById(@PathVariable("id") Long id) {
         return episodeService.getEpisodeById(id);
     }
 
     @RequestMapping(value = "/episodes/{id}/start", method = RequestMethod.POST)
-    public ResponseEntity startEpisode(@PathVariable("id") Long id){
+    public ResponseEntity startEpisode(@PathVariable("id") Long id) {
         return episodeService.startEpisode(id);
     }
 
     @RequestMapping(value = "/episodes/{id}/stop", method = RequestMethod.POST)
-    public ResponseEntity stopEpisode(@PathVariable("id") Long id){
+    public ResponseEntity stopEpisode(@PathVariable("id") Long id) {
         return episodeService.stopEpisode(id);
     }
 }
