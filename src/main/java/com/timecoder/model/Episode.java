@@ -30,8 +30,21 @@ public class Episode {
 
     Instant startTime;
 
-    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @JoinColumn(name = "episodeId")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "episodeToTheme",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "episodeId")}
+    )
     @OrderBy("createdAt")
     List<Theme> themeList = new ArrayList<>();
+
+    public void addTheme(Theme theme) {
+        themeList.add(theme);
+        theme.setEpisode(this);
+    }
+
+    public void removeTheme(Theme theme) {
+        themeList.remove(theme);
+        theme.setEpisode(null);
+    }
 }

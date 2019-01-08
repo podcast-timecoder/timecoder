@@ -30,4 +30,9 @@ public class ThemeController {
     public Iterable<Theme> getAllThemes(@RequestParam("episode") String episode){
         return themeService.getAllThemes(episode);
     }
+
+    @RequestMapping(value = "/episodes/{id}", method = RequestMethod.POST)
+    public ResponseEntity linkThemes(@PathVariable("id") Long id, @RequestBody List<Long> themeList){
+        return themeService.linkThemes(id, themeList);
+    }
 }

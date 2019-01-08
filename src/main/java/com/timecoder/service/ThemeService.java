@@ -1,6 +1,8 @@
 package com.timecoder.service;
 
+import com.timecoder.model.Episode;
 import com.timecoder.model.Theme;
+import com.timecoder.repository.EpisodeRepository;
 import com.timecoder.repository.ThemeRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -10,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -23,6 +27,7 @@ import static org.springframework.http.HttpStatus.OK;
 public class ThemeService {
 
     private final ThemeRepository themeRepository;
+    private final EpisodeRepository episodeRepository;
     private final EpisodeService episodeService;
 
     public ResponseEntity<Map<String, Long>> createTheme(Theme theme) {
@@ -54,5 +59,12 @@ public class ThemeService {
         }
 
         return themeRepository.findByEpisodeId(term);
+    }
+
+    public ResponseEntity linkThemes(Long id, List<Long> themeList) {
+        Episode episode = episodeRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        themeRepository.findAllById(themeList).forEach(episode::addTheme);
+        episodeRepository.save(episode);
+        return new ResponseEntity<>(singletonMap("changed", true), OK);
     }
 }

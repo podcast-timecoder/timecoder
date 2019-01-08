@@ -1,5 +1,6 @@
 package com.timecoder.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,6 @@ public class Theme {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(hidden = true)
     Long id;
-    Long episodeId;
     @ApiModelProperty(example = "Интро")
     String title;
     @ApiModelProperty(example = "-")
@@ -32,4 +32,8 @@ public class Theme {
     Instant timestamp = Instant.now();
     @ApiModelProperty(hidden = true)
     Date createdAt = new Date();
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "episodeId")
+    Episode episode;
 }

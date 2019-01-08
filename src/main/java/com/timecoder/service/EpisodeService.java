@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
+import java.util.List;
 
 import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.OK;
@@ -20,6 +21,7 @@ public class EpisodeService {
     private final EpisodeRepository episodeRepository;
 
     public ResponseEntity createEpisode(Episode episode) {
+        episode.getThemeList().forEach(episode::addTheme);
         long id = episodeRepository.save(episode).getId();
         return new ResponseEntity<>(singletonMap("created", id), OK);
     }
