@@ -14,11 +14,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
+import static com.google.common.primitives.Longs.asList;
 import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -30,8 +27,11 @@ public class ThemeService {
     private final EpisodeRepository episodeRepository;
     private final EpisodeService episodeService;
 
-    public ResponseEntity<Map<String, Long>> createTheme(Theme theme) {
-        long id = themeRepository.save(theme).getId();
+    public ResponseEntity<Map<String, Long>> createTheme(Long id, Theme theme) {
+        long themeId = themeRepository.save(theme).getId();
+
+        linkThemes(id, asList(themeId));
+
         return new ResponseEntity<>(singletonMap("id", id), OK);
     }
 
