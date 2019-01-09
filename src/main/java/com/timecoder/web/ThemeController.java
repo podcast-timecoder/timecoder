@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static java.util.Collections.singletonMap;
+import static org.springframework.http.HttpStatus.OK;
+
 @RestController
 @RequiredArgsConstructor
 public class ThemeController {
@@ -19,6 +22,12 @@ public class ThemeController {
     @RequestMapping(value = "/episodes/{id}/theme", method = RequestMethod.POST)
     public ResponseEntity createTheme(@PathVariable("id") Long id, @Valid @RequestBody Theme theme) {
         return themeService.createTheme(id, theme);
+    }
+
+    @RequestMapping(value = "/theme", method = RequestMethod.POST)
+    public ResponseEntity addFreeTheme(@Valid @RequestBody Theme theme) {
+        Long id = themeService.createTheme(theme);
+        return new ResponseEntity<>(singletonMap("id", id), OK);
     }
 
     @RequestMapping(value = "/episodes/{id}/theme/{themeId}/timestamp", method = RequestMethod.POST)

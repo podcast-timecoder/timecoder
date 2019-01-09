@@ -35,6 +35,10 @@ public class ThemeService {
         return new ResponseEntity<>(singletonMap("id", id), OK);
     }
 
+    public Long createTheme(Theme theme) {
+        return themeRepository.save(theme).getId();
+    }
+
     public Theme updateTimeStamp(Long episodeId, Long themeId) {
         Instant startTime = episodeService.getEpisodeById(episodeId).getStartTime();
         Theme currentTheme = themeRepository.findByIdAndEpisodeId(themeId, episodeId);
