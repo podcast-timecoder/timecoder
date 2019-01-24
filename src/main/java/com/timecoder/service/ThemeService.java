@@ -10,16 +10,17 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 
 import static com.google.common.primitives.Longs.asList;
 import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.OK;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ThemeService {
 
@@ -27,12 +28,12 @@ public class ThemeService {
     private final EpisodeRepository episodeRepository;
     private final EpisodeService episodeService;
 
-    public ResponseEntity<Map<String, Long>> createTheme(Long id, Theme theme) {
+    public Long createTheme(Long id, Theme theme) {
         long themeId = themeRepository.save(theme).getId();
 
         linkThemes(id, asList(themeId));
 
-        return new ResponseEntity<>(singletonMap("id", id), OK);
+        return id;
     }
 
     public Long createTheme(Theme theme) {
@@ -46,7 +47,7 @@ public class ThemeService {
         Instant currentThemeTime = Instant.now();
 
         Duration duration = Duration.between(startTime, currentThemeTime);
-        String timeCode = DurationFormatUtils.formatDuration(duration.toMillis(), "H:mm:ss", true);
+        String timeCode = DurationFormatUtils.formatDuration(duration.toMillis(), "HH:mm:ss", true);
 
         currentTheme.setTimecode(timeCode);
         currentTheme.setTimestamp(currentThemeTime);

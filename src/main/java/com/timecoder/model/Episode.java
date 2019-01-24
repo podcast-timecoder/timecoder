@@ -35,7 +35,7 @@ public class Episode {
             joinColumns = {@JoinColumn(name = "id")},
             inverseJoinColumns = {@JoinColumn(name = "episodeId")}
     )
-    @OrderBy("createdAt")
+    @OrderBy("timeCode, createdAt")
     List<Theme> themeList = new ArrayList<>();
 
     public void addTheme(Theme theme) {
