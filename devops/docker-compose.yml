@@ -27,14 +27,16 @@ services:
     container_name: timecoder-ui
     ports:
     - 80:80
+    volumes:
+    - "./nginx.conf:/etc/nginx/conf.d/default.conf"
     links:
     - timecoder-api
-  gateway:
-    image: spirogov/timecoder-gateway:latest
-    container_name: timecoder-gateway
-    ports:
-    - 8086:8080
-    environment:
-    - SPRING_PROFILES_ACTIVE=prod
-    links:
-    - timecoder-api
+#  gateway:
+#    image: spirogov/timecoder-gateway:latest
+#    container_name: timecoder-gateway
+#    ports:
+#    - 8086:8080
+#    environment:
+#    - SPRING_PROFILES_ACTIVE=prod
+#    links:
+#    - timecoder-api
