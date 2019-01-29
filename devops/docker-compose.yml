@@ -18,14 +18,7 @@ services:
     container_name: timecoder
     depends_on:
     - mysql
-    ports:
-    - 8080:8080
     environment:
-    - DATABASE_HOST=mysql
-    - DATABASE_NAME=timecoder
-    - DATABASE_USER=root
-    - MYSQL_ROOT_PASSWORD=admin
-    - DATABASE_PORT=3306
     - SPRING_PROFILES_ACTIVE=prod
     links:
     - mysql
@@ -34,5 +27,14 @@ services:
     container_name: timecoder-ui
     ports:
     - 80:80
+    links:
+    - timecoder-api
+  gateway:
+    image: spirogov/timecoder-gateway:latest
+    container_name: timecoder-gateway
+    ports:
+    - 8086:8080
+    environment:
+    - SPRING_PROFILES_ACTIVE=prod
     links:
     - timecoder-api
