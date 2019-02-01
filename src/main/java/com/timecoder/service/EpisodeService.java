@@ -40,4 +40,9 @@ public class EpisodeService {
         episode.setStarted(false);
         return episodeRepository.save(episode);
     }
+
+    public boolean deleteEpisode(Long id) {
+        episodeRepository.deleteById(id);
+        return true;
+    }
 }

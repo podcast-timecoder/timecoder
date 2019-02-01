@@ -49,4 +49,10 @@ public class EpisodeController {
         sseService.emitNotification(episode.getId());
         return new ResponseEntity<>(singletonMap("changed", true), OK);
     }
+
+    @RequestMapping(value = "/episodes/{id}/remove")
+    public ResponseEntity deleteEpisode(@PathVariable("id") Long id) {
+        boolean deleted = episodeService.deleteEpisode(id);
+        return new ResponseEntity<>(singletonMap("changed", deleted), OK);
+    }
 }
