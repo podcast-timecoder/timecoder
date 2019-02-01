@@ -12,7 +12,7 @@ services:
     volumes:
     - "./mycustom.cnf:/etc/mysql/conf.d/custom.cnf"
   timecoder-api:
-    image: spirogov/timecoder:1.3
+    image: spirogov/timecoder:1.4.0
     container_name: timecoder
     depends_on:
     - mysql
@@ -21,7 +21,7 @@ services:
     links:
     - mysql
   ui:
-    image: spirogov/timecoder-ui:1.4.0
+    image: spirogov/timecoder-ui:1.5.0
     container_name: timecoder-ui
     ports:
     - 80:80
@@ -30,7 +30,7 @@ services:
     links:
     - timecoder-api
   gateway:
-   image: spirogov/timecoder-gateway:1.4.0
+   image: spirogov/timecoder-gateway:1.5.0
    container_name: timecoder-gateway
    depends_on:
     - mysql
