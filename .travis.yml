@@ -19,10 +19,10 @@ script:
   - ./gradlew assemble jibDockerBuild
 
 after_script:
-  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${TRAVIS_TAG}"
   - docker images
 
 before_deploy:
+  - docker tag "$IMAGE_NAME:latest" "${IMAGE_NAME}:${TRAVIS_TAG}"
   - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
 deploy:

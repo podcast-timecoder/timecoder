@@ -26,7 +26,7 @@ bootJar {
 
 version =  '1.4.0'
 
-jib.to.image = "spirogov/timecoder:${version}"
+jib.to.image = "spirogov/timecoder:latest"
 
 repositories {
     jcenter()
