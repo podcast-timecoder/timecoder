@@ -7,11 +7,11 @@ script:
   - ./gradlew assemble jibDockerBuild
 
 after_script:
+  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${version}"
   - docker images
 
 before_deploy:
   - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
-  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${version}"
 
 deploy:
   provider: script
