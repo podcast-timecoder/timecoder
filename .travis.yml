@@ -6,4 +6,14 @@ services:
 script:
   - ./gradlew assemble jibDockerBuild
 
+after_script:
+  - docker images
 
+before_deploy:
+  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+
+deploy:
+  provider: script
+  script: docker push "${IMAGE_NAME}:latest" && docker push "${IMAGE_NAME}:${version}"
+  on:
+    branch: master
