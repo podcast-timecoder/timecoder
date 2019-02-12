@@ -1,8 +1,5 @@
 language: java
 
-env:
-  - IMAGE_NAME=spirogov/timecoder
-
 services:
   - docker
 
@@ -23,6 +20,7 @@ after_script:
 
 before_deploy:
   - docker tag "$IMAGE_NAME:latest" "${IMAGE_NAME}:${TRAVIS_TAG}"
+  - docker images
   - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
 deploy:
