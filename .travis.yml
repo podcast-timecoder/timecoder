@@ -1,5 +1,8 @@
 language: java
 
+env:
+  - IMAGE_NAME=spirogov/timecoder
+
 services:
   - docker
 
@@ -16,7 +19,7 @@ script:
   - ./gradlew assemble jibDockerBuild
 
 after_script:
-  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${version}"
+  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${TRAVIS_TAG}"
   - docker images
 
 before_deploy:
@@ -24,6 +27,6 @@ before_deploy:
 
 deploy:
   provider: script
-  script: docker push "${IMAGE_NAME}:${version}"
+  script: docker push "${IMAGE_NAME}:${TRAVIS_TAG}"
   on:
     tags: true
