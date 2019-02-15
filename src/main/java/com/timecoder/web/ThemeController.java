@@ -34,6 +34,12 @@ public class ThemeController {
         return new ResponseEntity<>(singletonMap("id", id), OK);
     }
 
+    @RequestMapping(value = "/theme/{id}/delete", method = RequestMethod.DELETE)
+    public ResponseEntity deleteFreeTheme(@PathVariable("id") Long id) {
+        boolean result = themeService.deleteFreeTheme(id);
+        return new ResponseEntity<>(singletonMap("changed", result), OK);
+    }
+
     @RequestMapping(value = "/episodes/{id}/theme/{themeId}/timestamp", method = RequestMethod.POST)
     public Theme setThemeTimestamp(@PathVariable("id") Long id, @PathVariable("themeId") Long themeId) {
         Theme theme = themeService.updateTimeStamp(id, themeId);
