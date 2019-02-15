@@ -50,7 +50,7 @@ public class EpisodeController {
         return new ResponseEntity<>(singletonMap("changed", true), OK);
     }
 
-    @RequestMapping(value = "/episodes/{id}/remove")
+    @RequestMapping(value = "/episodes/{id}/remove", method = RequestMethod.DELETE)
     public ResponseEntity deleteEpisode(@PathVariable("id") Long id) {
         boolean deleted = episodeService.deleteEpisode(id);
         return new ResponseEntity<>(singletonMap("changed", deleted), OK);

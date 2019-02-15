@@ -72,4 +72,9 @@ public class ThemeService {
         episodeRepository.save(episode);
         return new ResponseEntity<>(singletonMap("changed", true), OK);
     }
+
+    public boolean deleteFreeTheme(Long id) {
+        themeRepository.deleteById(id);
+        return true;
+    }
 }
