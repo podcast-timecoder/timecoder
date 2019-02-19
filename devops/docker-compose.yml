@@ -12,7 +12,7 @@ services:
     volumes:
     - "./mycustom.cnf:/etc/mysql/conf.d/custom.cnf"
   timecoder-api:
-    image: spirogov/timecoder-api:agent
+    image: spirogov/timecoder:1.1
     container_name: timecoder
     depends_on:
     - mysql

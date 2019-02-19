@@ -52,18 +52,15 @@ jib {
     }
 
     to {
-        image = "spirogov/timecoder-api:agent"
+        image = "spirogov/timecoder:1.1"
     }
-    
+
     extraDirectory {
-        path = file('src/main/jib')
-        permissions = [
-                '/jacoco/jacocoagent.jar': '777'
-        ]
+        path = file("${projectDir}/jib/jacoco")
     }
 
     container {
-        jvmFlags = ["-javaagent:/jacoco/jacocoagent.jar=port=36320,destfile=jacoco-it.exec,output=tcpserver"]
+        jvmFlags = ["-javaagent:/jacocoagent.jar=port=36320,output=tcpserver,address=0.0.0.0"]
         ports = ['8080', '36320']
     }
 }
