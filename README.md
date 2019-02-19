@@ -35,6 +35,6 @@ java -jar jacococli.jar dump --port=36320 --address=localhost --destfile=result.
 Generate report
 
 ----
-java -jar jacococli.jar report result.exec --classfiles=/home/sergey/Github/timecoder/build/classes --sourcefiles=/home/sergey/Github/timecoder/src/main/java --html report
+java -jar jacococli.jar report result.exec --classfiles=../build/classes --sourcefiles=../src/main/java --html report
 ----
 
