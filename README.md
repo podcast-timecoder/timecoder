@@ -27,6 +27,14 @@ CREATE DATABASE timecoder CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 JaCoCo
 
+Dump
 ----
 java -jar jacococli.jar dump --port=36320 --address=localhost --destfile=result.exec
 ----
+
+Generate report
+
+----
+java -jar jacococli.jar report result.exec --classfiles=/home/sergey/Github/timecoder/build/classes --sourcefiles=/home/sergey/Github/timecoder/src/main/java --html report
+----
+
