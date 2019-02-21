@@ -15,14 +15,9 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final EpisodeService episodeService;
 
     public Long createPost(Post post) {
-        Episode episode = episodeService.getEpisodeById(post.getEpisodeId());
-        if (episode != null) {
-            return postRepository.save(post).getId();
-        }
-        return null;
+        return postRepository.save(post).getId();
     }
 
     public Iterable<Post> getAllPosts() {
