@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class Post {
     private String shortDescription;
     @ApiModelProperty(example = "Test post description")
     private String description;
+    @Length(max=10000)
     private String link;
     @ElementCollection(fetch = FetchType.LAZY)
     @ApiModelProperty(dataType="List", example = "[One, Two, Three]")
