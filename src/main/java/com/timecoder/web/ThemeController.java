@@ -4,7 +4,7 @@ import com.timecoder.model.Theme;
 import com.timecoder.service.SseService;
 import com.timecoder.service.ThemeService;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +15,7 @@ import static java.util.Collections.singletonMap;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
+@EnableSpringDataWebSupport
 @RequiredArgsConstructor
 public class ThemeController {
 

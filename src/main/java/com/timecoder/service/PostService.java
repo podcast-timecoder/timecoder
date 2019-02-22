@@ -1,9 +1,9 @@
 package com.timecoder.service;
 
-import com.timecoder.model.Episode;
 import com.timecoder.model.Post;
 import com.timecoder.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,8 +20,8 @@ public class PostService {
         return postRepository.save(post).getId();
     }
 
-    public Iterable<Post> getAllPosts() {
-        return postRepository.findAll();
+    public Iterable<Post> getAllPosts(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 
     public Optional<Post> getPostById(long id) {
