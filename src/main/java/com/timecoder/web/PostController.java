@@ -1,6 +1,6 @@
 package com.timecoder.web;
 
-import com.timecoder.Page;
+import com.timecoder.util.Page;
 import com.timecoder.model.Post;
 import com.timecoder.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,6 @@ public class PostController {
 
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public Iterable<Post> getAllPosts(Page page) {
-
         Sort sort = Sort.by(new Sort.Order(page.getOrderBy(), page.getSortBy()));
 
         PageRequest pageRequest = PageRequest.of(page.getPageNumber(), page.getPageSize(),sort);

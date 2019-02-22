@@ -1,4 +1,4 @@
-package com.timecoder;
+package com.timecoder.util;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
