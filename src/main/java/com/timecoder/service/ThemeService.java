@@ -67,8 +67,15 @@ public class ThemeService {
     }
 
     public ResponseEntity linkThemes(Long id, List<Long> themeList) {
-        Episode episode = episodeRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        Episode episode = episodeRepository.findById(id).orElseThrow(RuntimeException::new);
         themeRepository.findAllById(themeList).forEach(episode::addTheme);
+        episodeRepository.save(episode);
+        return new ResponseEntity<>(singletonMap("changed", true), OK);
+    }
+
+    public ResponseEntity unlinkThemes(Long episodeId, Long themeId) {
+        Episode episode = episodeRepository.findById(episodeId).orElseThrow(RuntimeException::new);
+        episode.removeTheme(themeId);
         episodeRepository.save(episode);
         return new ResponseEntity<>(singletonMap("changed", true), OK);
     }
