@@ -43,7 +43,11 @@ public class Episode {
         theme.setEpisode(this);
     }
 
-    public void removeTheme(Theme theme) {
+    public void removeTheme(Long themeId) {
+        Theme theme = themeList
+                .stream()
+                .filter(t -> t.getId().equals(themeId))
+                .findFirst().get();
         themeList.remove(theme);
         theme.setEpisode(null);
     }

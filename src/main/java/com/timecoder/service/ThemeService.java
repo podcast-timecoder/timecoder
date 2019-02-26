@@ -73,14 +73,9 @@ public class ThemeService {
         return new ResponseEntity<>(singletonMap("changed", true), OK);
     }
 
-    public ResponseEntity unlinkThemes(Long episodeId, Theme theme) {
+    public ResponseEntity unlinkThemes(Long episodeId, Long themeId) {
         Episode episode = episodeRepository.findById(episodeId).orElseThrow(RuntimeException::new);
-        Theme currentThem = episode.getThemeList()
-                .stream()
-                .filter(theme1 -> theme1.getId().equals(theme.getId()))
-                .findFirst()
-                .orElseThrow(RuntimeException::new);
-        episode.removeTheme(currentThem);
+        episode.removeTheme(themeId);
         episodeRepository.save(episode);
         return new ResponseEntity<>(singletonMap("changed", true), OK);
     }
