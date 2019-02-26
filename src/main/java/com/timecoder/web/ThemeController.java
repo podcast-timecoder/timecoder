@@ -57,4 +57,9 @@ public class ThemeController {
     public ResponseEntity linkThemes(@PathVariable("id") Long id, @RequestBody List<Long> themeList) {
         return themeService.linkThemes(id, themeList);
     }
+
+    @RequestMapping(value = "/episodes/{id}/unlink", method = RequestMethod.POST)
+    public ResponseEntity unlinkThemes(@PathVariable("id") Long id, @RequestBody Theme theme) {
+        return themeService.unlinkThemes(id, theme);
+    }
 }

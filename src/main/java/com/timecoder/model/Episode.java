@@ -30,7 +30,7 @@ public class Episode {
 
     Instant startTime;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinTable(name = "episodeToTheme",
             joinColumns = {@JoinColumn(name = "id")},
             inverseJoinColumns = {@JoinColumn(name = "episodeId")}
