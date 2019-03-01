@@ -65,7 +65,7 @@ public class ThemeController {
     }
 
     @RequestMapping(value = "/theme/{id}/update", method = RequestMethod.PUT)
-    public Theme updateTheme(@PathVariable("id") Long id, UpdateThemeDto updateThemeDto) {
+    public Theme updateTheme(@PathVariable("id") Long id, @RequestBody UpdateThemeDto updateThemeDto) {
         return themeService.updateTheme(id, updateThemeDto);
     }
 }
