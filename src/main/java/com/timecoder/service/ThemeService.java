@@ -2,6 +2,7 @@ package com.timecoder.service;
 
 import com.timecoder.model.Episode;
 import com.timecoder.model.Theme;
+import com.timecoder.payload.UpdateThemeDto;
 import com.timecoder.repository.EpisodeRepository;
 import com.timecoder.repository.ThemeRepository;
 import lombok.RequiredArgsConstructor;
@@ -83,5 +84,11 @@ public class ThemeService {
     public boolean deleteFreeTheme(Long id) {
         themeRepository.deleteById(id);
         return true;
+    }
+
+    public Theme updateTheme(Long id, UpdateThemeDto updateThemeDto) {
+        Theme theme = themeRepository.findById(id).get();
+        theme.setTitle(updateThemeDto.getTitle());
+        return themeRepository.save(theme);
     }
 }

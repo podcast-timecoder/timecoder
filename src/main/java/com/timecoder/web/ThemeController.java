@@ -1,6 +1,7 @@
 package com.timecoder.web;
 
 import com.timecoder.model.Theme;
+import com.timecoder.payload.UpdateThemeDto;
 import com.timecoder.service.SseService;
 import com.timecoder.service.ThemeService;
 import lombok.RequiredArgsConstructor;
@@ -61,5 +62,10 @@ public class ThemeController {
     @RequestMapping(value = "/episodes/{id}/theme/{themeId}/unlink", method = RequestMethod.POST)
     public ResponseEntity unlinkThemes(@PathVariable("id") Long id, @PathVariable("themeId") Long themeId) {
         return themeService.unlinkThemes(id, themeId);
+    }
+
+    @RequestMapping(value = "/theme/{id}/update", method = RequestMethod.PUT)
+    public Theme updateTheme(@PathVariable("id") Long id, UpdateThemeDto updateThemeDto) {
+        return themeService.updateTheme(id, updateThemeDto);
     }
 }
