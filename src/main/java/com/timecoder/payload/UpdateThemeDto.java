@@ -12,4 +12,6 @@ public class UpdateThemeDto {
 
     @JsonProperty
     private String title;
+    @JsonProperty
+    private String timecode;
 }

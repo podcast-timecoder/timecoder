@@ -89,6 +89,7 @@ public class ThemeService {
     public Theme updateTheme(Long id, UpdateThemeDto updateThemeDto) {
         Theme theme = themeRepository.findById(id).get();
         theme.setTitle(updateThemeDto.getTitle());
+        theme.setTimecode(updateThemeDto.getTimecode());
         return themeRepository.save(theme);
     }
 }
