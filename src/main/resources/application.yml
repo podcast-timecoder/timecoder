@@ -25,7 +25,7 @@ spring:
   datasource:
     username: postgres
     password: admin
-    url: jdbc:postgresql://localhost:5432/timecoder
+    url: jdbc:postgresql://postgresql:5432/timecoder
   jpa:
     properties:
       hibernate:
