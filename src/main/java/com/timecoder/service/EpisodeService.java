@@ -20,8 +20,6 @@ public class EpisodeService {
 
     public long createEpisode(EpisodeDto episodeDto) {
         Episode episode = episodeMapper.toEpisodeWithout(episodeDto);
-
-        //episode.getThemeList().forEach(episode::addTheme);
         return episodeRepository.save(episode).getId();
     }
 
