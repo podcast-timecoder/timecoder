@@ -1,5 +1,6 @@
 package com.timecoder.web;
 
+import com.timecoder.dto.PostDto;
 import com.timecoder.util.Page;
 import com.timecoder.model.Post;
 import com.timecoder.service.PostService;
@@ -38,7 +39,7 @@ public class PostController {
     }
 
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
-    public ResponseEntity createPost(@RequestBody Post post) {
+    public ResponseEntity createPost(@RequestBody PostDto post) {
         long postId = postService.createPost(post);
         return new ResponseEntity<>(singletonMap("created", postId), OK);
     }
