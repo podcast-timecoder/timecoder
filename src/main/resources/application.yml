@@ -6,22 +6,32 @@ spring:
 spring:
   profiles: dev
   datasource:
-    username: root
+    username: postgres
     password: admin
-    url: jdbc:mysql://localhost:3306/timecoder?useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:postgresql://localhost:5432/timecoder
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
     hibernate:
       ddl-auto: update
-    database: mysql
 
 ---
 spring:
   profiles: prod
   datasource:
-    username: root
+    username: postgres
     password: admin
-    url: jdbc:mysql://mysql:3306/timecoder?useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:postgresql://localhost:5432/timecoder
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
     hibernate:
       ddl-auto: update
-    database: mysql
