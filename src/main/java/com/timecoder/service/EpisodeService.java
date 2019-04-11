@@ -1,7 +1,7 @@
 package com.timecoder.service;
 
 import com.timecoder.dto.EpisodeDto;
-import com.timecoder.mapper.impl.EpisodeMapperImpl;
+import com.timecoder.mapper.EpisodeMapper;
 import com.timecoder.model.Episode;
 import com.timecoder.repository.EpisodeRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.time.Instant;
 public class EpisodeService {
 
     private final EpisodeRepository episodeRepository;
-    private final EpisodeMapperImpl episodeMapper;
+    private final EpisodeMapper episodeMapper;
 
     public long createEpisode(EpisodeDto episodeDto) {
         Episode episode = episodeMapper.toEpisodeWithout(episodeDto);
