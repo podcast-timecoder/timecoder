@@ -1,5 +1,7 @@
 package com.timecoder.service;
 
+import com.timecoder.dto.PostDto;
+import com.timecoder.mapper.impl.PostMapperImpl;
 import com.timecoder.model.Post;
 import com.timecoder.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +17,10 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final PostMapperImpl postMapper;
 
-    public Long createPost(Post post) {
+    public Long createPost(PostDto postDto) {
+        Post post = postMapper.toPost(postDto);
         return postRepository.save(post).getId();
     }
 

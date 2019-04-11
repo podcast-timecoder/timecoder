@@ -1,5 +1,6 @@
 package com.timecoder.web;
 
+import com.timecoder.dto.EpisodeDto;
 import com.timecoder.model.Episode;
 import com.timecoder.service.EpisodeService;
 import com.timecoder.service.SseService;
@@ -21,7 +22,7 @@ public class EpisodeController {
     private final SseService sseService;
 
     @RequestMapping(value = "/episodes", method = RequestMethod.POST)
-    public ResponseEntity createEpisode(@Valid @RequestBody Episode episode) {
+    public ResponseEntity createEpisode(@Valid @RequestBody EpisodeDto episode) {
         long episodeId = episodeService.createEpisode(episode);
         return new ResponseEntity<>(singletonMap("created", episodeId), OK);
     }
