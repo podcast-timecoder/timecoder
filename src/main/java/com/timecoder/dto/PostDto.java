@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 public class PostDto {
 
+    private long episodeId;
     @ApiModelProperty(hidden = true)
     private Date createdAt = new Date();
     @ApiModelProperty(example = "Hello world")
