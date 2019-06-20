@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
         classpath "io.franzbecker:gradle-lombok:1.14"
-        classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:0.9.13"
+        classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:1.3.0"
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.21"
     }
 }
@@ -26,9 +26,8 @@ bootJar {
     baseName = 'timecoder-api-service'
 }
 
-version =  '1.4.0'
+version = '1.4.0'
 
-jib.to.image = "spirogov/timecoder:latest"
 
 repositories {
     jcenter()
@@ -48,7 +47,24 @@ dependencies {
     compile "org.mapstruct:mapstruct-jdk8:1.3.0.Final"
 
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.3.0.Final'
-    
+
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
+}
+
+jib {
+    from {
+        image = "openjdk:8-slim"
+    }
+
+    to {
+        image = "spirogov/timecoder:latest"
+    }
+
+    container {
+        jvmFlags = ["-javaagent:/jacocoagent.jar=port=36321,output=tcpserver,address=0.0.0.0"]
+        ports = ["36321"]
+    }
+
+    extraDirectories.paths = ["$projectDir/jib/jacoco/"]
 }
