@@ -21,6 +21,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: "io.franzbecker.gradle-lombok"
 apply plugin: "com.google.cloud.tools.jib"
 apply plugin: "net.ltgt.apt"
+apply plugin: "jacoco"
 
 bootJar {
     baseName = 'timecoder-api-service'
@@ -51,4 +52,13 @@ dependencies {
     
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.199'
+}
+
+jacocoTestReport {
+    group = "Reporting"
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination "${buildDir}/reports/coverage"
+    }
 }
