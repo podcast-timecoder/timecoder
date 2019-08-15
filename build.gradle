@@ -54,6 +54,17 @@ dependencies {
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.199'
 }
 
+test {
+
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+
+    test.outputs.upToDateWhen { false }
+}
+
 jacocoTestReport {
     group = "Reporting"
     reports {
