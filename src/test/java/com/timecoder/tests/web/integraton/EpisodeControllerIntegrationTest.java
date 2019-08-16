@@ -17,7 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -74,7 +76,7 @@ public class EpisodeControllerIntegrationTest extends BaseIntegrationTest {
     public void testCanGetAllEpisodes() throws Exception {
         long id = createTestEpisode("#1: Python").getId();
 
-        mvc.perform(MockMvcRequestBuilders.get("/episodes"))
+        mvc.perform(get("/episodes"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.content().json("[{\"id\":" + id + ",\"name\":\"#1: Python\",\"startTime\":null,\"themeList\":[],\"started\":false}]"));
@@ -84,10 +86,30 @@ public class EpisodeControllerIntegrationTest extends BaseIntegrationTest {
     public void testCanGetEpisodeById() throws Exception {
         long id = createTestEpisode("#2: .Net").getId();
 
-        mvc.perform(MockMvcRequestBuilders.get("/episodes/" + id))
+        mvc.perform(get("/episodes/{id}", id))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.content().json("{\"id\":"+id+",\"name\":\"#2: .Net\",\"startTime\":null,\"themeList\":[],\"started\":false}"));
+                .andExpect(MockMvcResultMatchers.content().json("{\"id\":" + id + ",\"name\":\"#2: .Net\",\"startTime\":null,\"themeList\":[],\"started\":false}"));
+    }
+
+    @Test
+    public void testCanDeleteEpisode() throws Exception {
+        long id = createTestEpisode("#3: Java").getId();
+
+        mvc.perform(delete("/episodes/{id}/remove", id))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().json("{\"changed\":true}"));
+    }
+
+    @Test
+    public void testCanStartEpisode() throws Exception {
+        long id = createTestEpisode("#4: JS").getId();
+
+        mvc.perform(post("/episodes/{id}/start", id))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().json("{\"changed\":true}"));
     }
 
     private Episode createTestEpisode(String name) {
