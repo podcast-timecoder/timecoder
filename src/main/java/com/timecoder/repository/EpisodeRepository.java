@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface EpisodeRepository extends CrudRepository<Episode, Long> {
     List<Episode> findAllByOrderByIdDesc();
+
+    Episode findByName(String name);
 }

@@ -5,7 +5,9 @@ import com.timecoder.dto.EpisodeDto;
 import com.timecoder.model.Episode;
 import com.timecoder.repository.EpisodeRepository;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.util.NestedServletException;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -29,6 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
 public class EpisodeControllerIntegrationTest extends BaseIntegrationTest {
+
+    @Rule
+    public ExpectedException exceptionRule = ExpectedException.none();
 
     @Autowired
     private MockMvc mvc;
@@ -110,6 +116,29 @@ public class EpisodeControllerIntegrationTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().json("{\"changed\":true}"));
+    }
+
+    @Test
+    public void shouldBeExceptionWhenGetNonExistingEpisode() throws Exception {
+        exceptionRule.expect(NestedServletException.class);
+        exceptionRule.expectMessage("Episode id 1 not found");
+
+        mvc.perform(get("/episodes/{id}", 1))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    public void testCanNotCreateEpisodeWithTheSameName() throws Exception {
+        createTestEpisode("Episode 1");
+
+        EpisodeDto episode = new EpisodeDto();
+        episode.setName("Episode 1");
+
+        mvc.perform(MockMvcRequestBuilders.post("/episodes")
+                .content(asJsonString(episode)))
+                .andExpect(status().is(415))
+                .andDo(print());
     }
 
     private Episode createTestEpisode(String name) {

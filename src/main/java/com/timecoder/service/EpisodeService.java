@@ -20,6 +20,11 @@ public class EpisodeService {
 
     public long createEpisode(EpisodeDto episodeDto) {
         Episode episode = episodeMapper.toEpisodeWithout(episodeDto);
+
+        if (episodeRepository.findByName(episodeDto.getName()) != null) {
+            throw new RuntimeException("Episode with name " + episodeDto.getName() + " already exist");
+        }
+
         return episodeRepository.save(episode).getId();
     }
 
