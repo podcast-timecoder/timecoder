@@ -1,5 +1,6 @@
 package com.timecoder.service;
 
+import com.timecoder.EpisodeExistsException;
 import com.timecoder.aspect.Logger;
 import com.timecoder.dto.EpisodeDto;
 import com.timecoder.mapper.EpisodeMapper;
@@ -24,7 +25,7 @@ public class EpisodeService {
         Episode episode = episodeMapper.toEpisodeWithout(episodeDto);
 
         if (episodeRepository.findByName(episodeDto.getName()) != null) {
-            throw new RuntimeException("Episode with name " + episodeDto.getName() + " already exist");
+            throw new EpisodeExistsException("Episode with name " + episodeDto.getName() + " already exist");
         }
 
         return episodeRepository.save(episode).getId();
