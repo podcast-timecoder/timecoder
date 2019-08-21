@@ -13,8 +13,7 @@ cache:
     - $HOME/.gradle/wrapper/
 
 script:
-  - ./gradlew sonarqube \
-    -Dsonar.projectKey=podcast-timecoder_timecoder \
+  - ./gradlew sonarqube -Dsonar.projectKey=podcast-timecoder_timecoder \
     -Dsonar.organization=podcast-timecoder \
     -Dsonar.host.url=https://sonarcloud.io \
     -Dsonar.login=f05df96549f723014eb7278525f5b0d61ca59043
