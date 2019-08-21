@@ -10,6 +10,7 @@ buildscript {
         classpath "io.franzbecker:gradle-lombok:1.14"
         classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:0.9.13"
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.21"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.1"
     }
 }
 
@@ -22,6 +23,7 @@ apply plugin: "io.franzbecker.gradle-lombok"
 apply plugin: "com.google.cloud.tools.jib"
 apply plugin: "net.ltgt.apt"
 apply plugin: "jacoco"
+apply plugin: "org.sonarqube"
 
 bootJar {
     baseName = 'timecoder-api-service'
