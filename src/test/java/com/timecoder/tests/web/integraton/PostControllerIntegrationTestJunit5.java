@@ -7,11 +7,11 @@ import com.timecoder.model.Post;
 import com.timecoder.repository.PostRepository;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
@@ -54,7 +54,6 @@ public class PostControllerIntegrationTestJunit5 {
                 .jsonPath("$.created").exists();
     }
 
-    @Disabled("Actually we can. Bug o feature?")
     @Test
     public void cantCreatePostWithBlankName(){
         PostDto post = new PostDto();
@@ -67,7 +66,6 @@ public class PostControllerIntegrationTestJunit5 {
                 .expectStatus().isBadRequest();
     }
 
-    @Disabled("Actually we can. Bug o feature?")
     @Test
     public void cantCreatePostWithNullName(){
         PostDto post = new PostDto();
@@ -82,20 +80,6 @@ public class PostControllerIntegrationTestJunit5 {
     @Test
     public void testCanGetAllPosts() {
         Post post = createPost("Post1");
-
-       /*
-
-       This approach doesn't work because of strange sing: test falls even when exp/act results are similar
-
-        this.webClient.get()
-            .uri("/posts?orderBy=DESC&pageNumber=0&pageSize=5&sortBy=id")
-            .exchange()
-            .expectStatus().isOk()
-            .expectBody()
-            .jsonPath("$.content")
-            .isEqualTo("{id=" + post.getId() + ", episodeId=0, createdAt=" +
-                    dateToCorrectView(post.getCreatedAt()) + ", name=Post1, shortDescription=null, description=null," +
-                    " link=null, guests=[]}");*/
 
         this.webClient.get()
             .uri("/posts?orderBy=DESC&pageNumber=0&pageSize=5&sortBy=id")
@@ -130,6 +114,16 @@ public class PostControllerIntegrationTestJunit5 {
     }
 
     @Test
+    public void shouldBeExceptionWhenGetNonExistingPostById() {
+        this.webClient.get()
+                .uri("/posts/1")
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.NOT_FOUND)
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("Post id 1 not found");
+    }
+
+    @Test
     public void testCanUpdatePostById(){
         Post post = createPost("Post1");
 
@@ -143,19 +137,18 @@ public class PostControllerIntegrationTestJunit5 {
                 .json("{\"updated\":" + post.getId() + "}");
     }
 
-    @Disabled("There is no response with 404 and message because of PostService.getPostById throws an exception. Fix?")
     @Test
     public void testCantUpdatePostByInvalidId(){
         Post post = createPost("Post1");
-
         post.setName("UpdatedName");
+
         this.webClient.put()
                 .uri("/posts/" + 2)
                 .body(fromObject(post))
                 .exchange()
-                .expectStatus().isNotFound()
+                .expectStatus().isEqualTo(HttpStatus.NOT_FOUND)
                 .expectBody()
-                .json("{\"status\":\"No such post with id 2\"}");
+                .jsonPath("$.message").isEqualTo("Post id 2 not found");
     }
 
     @Test
