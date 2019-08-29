@@ -1,5 +1,6 @@
 package com.timecoder.service;
 
+import com.timecoder.PostExistsException;
 import com.timecoder.dto.PostDto;
 import com.timecoder.mapper.PostMapper;
 import com.timecoder.model.Post;
@@ -29,7 +30,7 @@ public class PostService {
     }
 
     public Optional<Post> getPostById(long id) {
-        return Optional.of(postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post id " + id + " not found")));
+        return Optional.of(postRepository.findById(id).orElseThrow(() -> new PostExistsException("Post id " + id + " not found")));
     }
 
     public Long updatePost(Post post) {

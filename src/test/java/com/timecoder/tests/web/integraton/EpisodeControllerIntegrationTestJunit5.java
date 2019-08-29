@@ -129,9 +129,9 @@ public class EpisodeControllerIntegrationTestJunit5 extends BaseIntegrationTest 
                 .body(fromObject(episode))
                 .exchange()
                 .expectStatus()
-                .isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)
+                .isEqualTo(HttpStatus.CONFLICT)
                 .expectBody()
-                .jsonPath("$.message").isEqualTo("Episode with name Episode 1 already exist");
+                .json("{\"status\":\"CONFLICT\",\"message\":\"Episode with name Episode 1 already exist\"}");
     }
 
     private Episode createTestEpisode(String name) {
