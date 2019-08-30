@@ -62,9 +62,7 @@ dependencies {
 }
 
 test {
-
-//    use for jUnit5 tests
-//    useJUnitPlatform()
+    useJUnitPlatform()
 
     testLogging {
         events "PASSED", "FAILED", "SKIPPED"
@@ -75,11 +73,11 @@ test {
     test.outputs.upToDateWhen { false }
 }
 
-jacocoTestReport {
-    group = "Reporting"
-    reports {
-        xml.enabled true
-        csv.enabled false
-        html.destination "${buildDir}/reports/coverage"
-    }
-}
+//jacocoTestReport {
+//    group = "Reporting"
+//    reports {
+//        xml.enabled true
+//        csv.enabled false
+//        html.destination "${buildDir}/reports/coverage"
+//    }
+//}
