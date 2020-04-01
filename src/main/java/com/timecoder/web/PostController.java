@@ -25,7 +25,7 @@ public class PostController {
     private final PostService postService;
 
 
-    @RequestMapping(value = "/posts", method = RequestMethod.GET)
+    @GetMapping(value = "/posts")
     public Iterable<Post> getAllPosts(Page page) {
         Sort sort = Sort.by(new Sort.Order(page.getOrderBy(), page.getSortBy()));
 
@@ -34,25 +34,25 @@ public class PostController {
         return postService.getAllPosts(pageRequest);
     }
 
-    @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/posts/{id}")
     public Post getPostById(@PathVariable("id") Long id) {
         return postService.getPostById(id).get();
     }
 
-    @RequestMapping(value = "/posts", method = RequestMethod.POST)
+    @PostMapping(value = "/posts")
     public ResponseEntity createPost(@Valid @RequestBody PostDto post) {
         long postId = postService.createPost(post);
         return new ResponseEntity<>(singletonMap("created", postId), OK);
     }
 
-    @RequestMapping(value = "/posts/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/posts/{id}")
     public ResponseEntity updatePost(@PathVariable("id") Long id, @RequestBody Post post) {
         postService.getPostById(id);
         long postId = postService.updatePost(post);
         return new ResponseEntity<>(singletonMap("updated", postId), OK);
     }
 
-    @RequestMapping(value = "/posts/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/posts/{id}")
     public ResponseEntity deletePostById(@PathVariable("id") Long id) {
         boolean deleted = postService.deletePostById(id);
         return new ResponseEntity<>(singletonMap("changed", deleted), OK);
