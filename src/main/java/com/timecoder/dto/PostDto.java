@@ -26,6 +26,6 @@ public class PostDto {
     private String description;
     @Length(max=10000)
     private String link;
-    @ApiModelProperty(dataType="List", example = "[One, Two, Three]")
+    @ApiModelProperty(dataType="List")
     private List<String> guests = new ArrayList<>();
 }
