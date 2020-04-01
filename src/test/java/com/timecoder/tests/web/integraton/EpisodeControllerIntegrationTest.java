@@ -119,6 +119,16 @@ public class EpisodeControllerIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
+    public void testCanStopEpisode() throws Exception {
+        long id = createTestEpisode("#5: JS").getId();
+
+        mvc.perform(post("/episodes/{id}/stop", id))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().json("{\"changed\":true}"));
+    }
+
+    @Test
     public void shouldBeExceptionWhenGetNonExistingEpisode() throws Exception {
         exceptionRule.expect(NestedServletException.class);
         exceptionRule.expectMessage("Episode id 1 not found");
