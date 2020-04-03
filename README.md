@@ -24,3 +24,8 @@ values (
     "Привет");
 
 CREATE DATABASE timecoder CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+Local run with Jacoco 
+
+java -javaagent:jib/jacoco/jacocoagent.jar=port=36321,output=tcpserver,address=0.0.0.0 -jar build/libs/timecoder-api-service-1.4.0.jar
