@@ -28,7 +28,6 @@ public class SseService {
             } catch (IOException e) {
                 emitter.complete();
                 emitterList.remove(emitter);
-                //e.printStackTrace();
             }
         });
     }

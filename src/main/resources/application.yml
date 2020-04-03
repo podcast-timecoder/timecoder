@@ -18,8 +18,8 @@ spring:
 spring:
   profiles: prod
   datasource:
-    username: root
-    password: admin
+    username: ${USER_NAME}
+    password: ${PASSWORD}
     url: jdbc:mysql://mysql:3306/timecoder?useUnicode=yes&characterEncoding=UTF-8
   jpa:
     hibernate:

@@ -60,7 +60,7 @@ public class ThemeService {
 
     public Iterable<Theme> getAllThemes(String episode) {
         Long term = null;
-        if(NumberUtils.isCreatable(episode)) {
+        if (NumberUtils.isCreatable(episode)) {
             term = NumberUtils.createLong(episode);
         }
 
@@ -87,7 +87,9 @@ public class ThemeService {
     }
 
     public Theme updateTheme(Long id, UpdateThemeDto updateThemeDto) {
-        Theme theme = themeRepository.findById(id).get();
+        Theme theme = themeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No such theme with id " + id));
+
         theme.setTitle(updateThemeDto.getTitle());
         theme.setTimecode(updateThemeDto.getTimecode());
         return themeRepository.save(theme);

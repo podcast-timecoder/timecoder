@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class PostController {
     private final PostService postService;
 
 
-    @RequestMapping(value = "/posts", method = RequestMethod.GET)
+    @GetMapping(value = "/posts")
     public Iterable<Post> getAllPosts(Page page) {
         Sort sort = Sort.by(new Sort.Order(page.getOrderBy(), page.getSortBy()));
 
@@ -33,28 +34,25 @@ public class PostController {
         return postService.getAllPosts(pageRequest);
     }
 
-    @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/posts/{id}")
     public Post getPostById(@PathVariable("id") Long id) {
         return postService.getPostById(id).get();
     }
 
-    @RequestMapping(value = "/posts", method = RequestMethod.POST)
-    public ResponseEntity createPost(@RequestBody PostDto post) {
+    @PostMapping(value = "/posts")
+    public ResponseEntity createPost(@Valid @RequestBody PostDto post) {
         long postId = postService.createPost(post);
         return new ResponseEntity<>(singletonMap("created", postId), OK);
     }
 
-    @RequestMapping(value = "/posts/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/posts/{id}")
     public ResponseEntity updatePost(@PathVariable("id") Long id, @RequestBody Post post) {
-        Optional<Post> post1 = postService.getPostById(id);
-        if (!post1.isPresent()) {
-            return new ResponseEntity<>(Collections.singletonMap("status", "No such post with id " + id), HttpStatus.NOT_FOUND);
-        }
+        postService.getPostById(id);
         long postId = postService.updatePost(post);
         return new ResponseEntity<>(singletonMap("updated", postId), OK);
     }
 
-    @RequestMapping(value = "/posts/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/posts/{id}")
     public ResponseEntity deletePostById(@PathVariable("id") Long id) {
         boolean deleted = postService.deletePostById(id);
         return new ResponseEntity<>(singletonMap("changed", deleted), OK);

@@ -47,7 +47,7 @@ public class Episode {
         Theme theme = themeList
                 .stream()
                 .filter(t -> t.getId().equals(themeId))
-                .findFirst().get();
+                .findFirst().orElseThrow(() -> new RuntimeException("No such theme with id " + themeId));
         themeList.remove(theme);
         theme.setEpisode(null);
     }
