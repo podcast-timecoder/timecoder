@@ -5,6 +5,7 @@ import com.timecoder.aspect.Logger;
 import com.timecoder.dto.EpisodeDto;
 import com.timecoder.mapper.EpisodeMapper;
 import com.timecoder.model.Episode;
+import com.timecoder.model.Guest;
 import com.timecoder.repository.EpisodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,14 @@ public class EpisodeService {
     public boolean deleteEpisode(Long id) {
         episodeRepository.deleteById(id);
         return true;
+    }
+
+    public Episode addGuest(Long id, String guestName) {
+        Episode episode = getEpisodeById(id);
+        Guest guest = new Guest();
+        guest.setName(guestName);
+        episode.addGuest(guest);
+
+        return episodeRepository.save(episode);
     }
 }

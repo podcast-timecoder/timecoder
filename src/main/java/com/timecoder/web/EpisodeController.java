@@ -55,4 +55,10 @@ public class EpisodeController {
         boolean deleted = episodeService.deleteEpisode(id);
         return new ResponseEntity<>(singletonMap("changed", deleted), OK);
     }
+
+    @PostMapping("/episodes/{id}/guest")
+    public ResponseEntity addGuest(@PathVariable("id") Long id, String guest){
+        episodeService.addGuest(id, guest);
+        return new ResponseEntity<>(singletonMap("changed", true), OK);
+    }
 }

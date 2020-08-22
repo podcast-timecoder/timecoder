@@ -38,9 +38,21 @@ public class Episode {
     @OrderBy("timeCode, createdAt")
     List<Theme> themeList = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
+    @JoinTable(name = "episodeToGuest",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "episodeId")}
+    )
+    List<Guest> guests = new ArrayList<>();
+
     public void addTheme(Theme theme) {
         themeList.add(theme);
         theme.setEpisode(this);
+    }
+
+    public void addGuest(Guest guest){
+        guests.add(guest);
+        guest.setEpisode(this);
     }
 
     public void removeTheme(Long themeId) {
