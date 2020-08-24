@@ -3,6 +3,7 @@ package com.timecoder.tests.web.integraton;
 import com.timecoder.TimecoderApplication;
 import com.timecoder.dto.EpisodeDto;
 import com.timecoder.model.Episode;
+import com.timecoder.model.Guest;
 import com.timecoder.repository.EpisodeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -132,6 +133,25 @@ public class EpisodeControllerIntegrationTestJunit5 extends BaseIntegrationTest 
                 .isEqualTo(HttpStatus.CONFLICT)
                 .expectBody()
                 .json("{\"status\":\"CONFLICT\",\"message\":\"Episode with name Episode 1 already exist\"}");
+    }
+
+    @Test
+    public void testCanAddEpisodeGuest(){
+        Episode episode = createTestEpisode("Episode 1");
+
+        this.webClient.post()
+                .uri("/episodes/{id}/guest", episode.getId())
+                .body(fromObject("Ivan"))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.OK);
+
+
+        this.webClient.get()
+                .uri("/episodes/{id}", episode.getId())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .json("{\"id\":1,\"name\":\"Episode 1\",\"startTime\":null,\"themeList\":[],\"guests\":[{\"id\":1,\"name\":\"Ivan\"}],\"started\":false}");
     }
 
     private Episode createTestEpisode(String name) {

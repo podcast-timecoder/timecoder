@@ -57,7 +57,7 @@ public class EpisodeController {
     }
 
     @PostMapping("/episodes/{id}/guest")
-    public ResponseEntity addGuest(@PathVariable("id") Long id, String guest){
+    public ResponseEntity addGuest(@PathVariable("id") Long id, @RequestBody String guest){
         episodeService.addGuest(id, guest);
         return new ResponseEntity<>(singletonMap("changed", true), OK);
     }
